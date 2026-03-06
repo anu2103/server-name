@@ -1,20 +1,16 @@
-name: Simple CI Test
+name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  test-job:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Hello Message
-        run: echo "Hello from GitHub CI"
-
-      - name: Print Date
-        run: date
-
-      - name: Show Files
-        run: ls -la
+      - uses: actions/checkout@v3
+      - name: Build Docker Image
+        run: docker build -t myapp .
+      - name: Push to Registry
+        run: docker push myapp
